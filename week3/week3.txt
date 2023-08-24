@@ -1,0 +1,150 @@
+#!/bin/bash
+echo "enter 1st number:"
+read a
+echo "enter 2nd number:"
+read b
+echo "enter 3rd number:"
+read c
+
+if [[ $a -gt $b ]] && [[ $a -gt $c ]];
+then
+                echo "$a is greatest!"
+        fi
+        if [[ $b -gt $a ]] && [[ $b -gt $c ]];
+        then
+                        echo "$b is greatest!"
+                fi
+                if [[ $c -gt $a ]] && [[ $c -gt $b ]];
+                then
+                                echo "$c is greatest!"
+                        fi
+
+
+
+============================================================
+
+
+
+#!/bin/bash
+a=5
+while [ $a -gt 0 ]
+do
+        echo "$a"
+        ((a--))
+done
+
+
+
+===========================================================
+
+
+#!/bin/bash
+echo "enter number:"
+read num
+rev=0
+while [ $num -gt 0 ]
+do
+        rem=$[ $num % 10 ]
+        num=$[ $num / 10 ]
+        rev=$[ $rev * 10 + $rem ]
+done
+echo "Reverse:$rev"
+
+
+
+========================================================
+#!/bin/bash
+sum=0
+echo "enter number:"
+read num
+while [ $num -gt 0 ]
+do
+        rem=$[ $num % 10 ]
+        sum=$[ $sum + $rem ]
+        num=$[ $num / 10 ]
+done
+echo "Sum:$sum"
+======================================================
+
+#!/bin/bash
+file=$(cat text.txt)
+echo "enter the line no."
+read n1
+no=0
+for line in $file
+do
+        if [ $no -ge $n1 ]
+then
+        echo "$line"
+fi
+no=$[ $no + 1 ]
+done
+
+
+
+
+
+
+q2 
+
+#!/bin/bash
+
+until [ $resp = "yes" ]
+do
+        echo "Listing files..."
+ls
+
+echo "Long listing..."
+
+ls -l
+
+echo "Delete files..."
+
+rm ./sample.txt
+echo "Quit?/yes/no"
+read resp
+done
+===================================================
+
+#!/bin/bash
+echo "Enter file name:"
+read name
+echo "Changing permissions..."
+chmod u+rx "$name"
+
+
+================================================
+
+#!/bin/bash
+echo "Enter first string:"
+read s1
+echo "Enter second:"
+read s2
+
+if [[ $s1 == $s2 ]]
+then
+        echo "Equal!"
+else
+        echo "Not equal!"
+fi
+====================================
+
+#!/bin/bash
+for filename in "$@";
+do
+        if [ -f $filename ]
+                then
+                        echo "Normal file exists."
+        fi
+        if [ -d $filename ]
+                then
+                        echo "Directory exists."
+                        ls -l | grep "^-" | wc -l
+        fi
+        if [ ! -e $filename ]
+                then
+                        echo "Does not exist!"
+        fi
+done
+
+
