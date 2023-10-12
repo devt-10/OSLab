@@ -1,0 +1,250 @@
+Filters
+Enter Data Same as Below(Using Vi Command)
+
+vi table
+
+1;John;Los_Angeles;California;29;Aug;Male;174;96;4
+
+2;Max;Chicago;Illinois;45;Jan;Male;189;87;2
+
+3;Samantha;Houston;Texas;25;Jul;Female;185;110;4
+
+4;Penelope;Phoenix;Arizona;48;Sep;Female;195;104;3
+
+5;Henry;Fort_Worth;Texas;35;Apr;Male;149;61;3
+
+6;William;San_Francisco;California;37;Apr;Male;189;104;3
+
+7;Scott;Las_Vegas;Nevada;39;May;Male;147;92;5
+
+8;James;Miami;Florida;26;Oct;Male;154;111;5
+
+9;Jason;Oakland;California;40;Feb;Male;174;90;3
+
+10;Megan;Cincinnati;Ohio;24;Nov;Female;169;103;4
+
+***************************************************
+vi q1
+
+#!/bin/bash
+
+# Display a menu of options for the user.
+echo ""
+echo ""
+echo "1. Sort all records based on location."
+echo "2. Sort all records based on State."
+echo "3. Sort all records based on BMI index."
+echo "4. Display all records sorted on State and the location. "
+echo "5. Display only the Row no, Name, Age, Gender, and BMI columns."
+echo "6. Change all names into uppercase."
+echo "7. Sort all records based on age."
+echo "8. Display all records ordered on Month in a file called Personnel_data_month2022.dat."
+echo "9. Display records where names begin with S and J. Store in a new file SJ_Names.dat."
+echo "10. Move columns Name, Location, State, Age, and Index into a new file after sorting on Name field."
+echo "11 for exit"
+# Prompt the user to enter their choice.
+echo "Enter the option (1-11):"
+read option
+
+# Use a case statement to execute the corresponding command based on the user's choice.
+case "$option" in
+    1)
+        sort -t";" -k3 table # Sort records based on location.
+        ./q1
+        ;;
+    2)
+        sort -t";" -k4 table # Sort records based on State.
+        ./q1
+        ;;
+    3)
+        sort -t";" -k10 table # Sort records based on BMI index.
+        ./q1
+        ;;
+    4)
+        sort -t";" -k4 -k3 table # Sort records based on State and location.
+        ./q1
+        ;;
+    5)
+        cut -d";" -f1,2,5,7,10 table # Display selected columns.
+        ./q1
+        ;;
+    6)
+        cut -d ";" -f2 table | tr 'a-z' 'A-Z' # Change names to uppercase.
+        ./q1
+        ;;
+    7)
+        sort -t";" -k5 table # Sort records based on age.
+        ./q1
+        ;;
+    8)
+        sort -t";" -M -k6 table > Personnel_data_month2022.dat # Sort by month and save to a file.
+        cat Personnel_data_month2022.dat
+        ./q1
+        ;;
+    9)
+        cut -d ";" -f2 table | grep -e S -e J > SJ_Names.dat # Filter names starting with S or J.
+        cat SJ_Names.dat
+        ./q1
+        ;;
+    10)
+        cut -d ";" -f2,3,4,5 table | sort -t ";" -k1 > Name.dat # Sort and save specific columns.
+        cat Name.dat
+        ./q1
+        ;;
+    11)
+            exit 0 # Exit the script gracefully.
+            ;;
+    *)
+        echo "Invalid option." # Display an error message for invalid choices.
+        ;;
+esac
+************************************************
+Q1. sort -t";" -k3 table
+
+output:
+
+2;Max;Chicago;Illinois;45;Jan;Male;189;87;2
+10;Megan;Cincinnati;Ohio;24;Nov;Female;169;103;4
+5;Henry;Fort_Worth;Texas;35;Apr;Male;149;61;3
+3;Samantha;Houston;Texas;25;Jul;Female;185;110;4
+7;Scott;Las_Vegas;Nevada;39;May;Male;147;92;5
+1;John;Los_Angeles;California;29;Aug;Male;174;96;4
+8;James;Miami;Florida;26;Oct;Male;154;111;5
+9;Jason;Oakland;California;40;Feb;Male;174;90;3
+4;Penelope;Phoenix;Arizona;48;Sep;Female;195;104;3
+6;William;San_Francisco;California;37;Apr;Male;189;104;3
+************************************************
+Q2. sort -t";" -k4 table
+
+output:
+
+4;Penelope;Phoenix;Arizona;48;Sep;Female;195;104;3
+1;John;Los_Angeles;California;29;Aug;Male;174;96;4
+6;William;San_Francisco;California;37;Apr;Male;189;104;3
+9;Jason;Oakland;California;40;Feb;Male;174;90;3
+8;James;Miami;Florida;26;Oct;Male;154;111;5
+2;Max;Chicago;Illinois;45;Jan;Male;189;87;2
+7;Scott;Las_Vegas;Nevada;39;May;Male;147;92;5
+10;Megan;Cincinnati;Ohio;24;Nov;Female;169;103;4
+3;Samantha;Houston;Texas;25;Jul;Female;185;110;4
+5;Henry;Fort_Worth;Texas;35;Apr;Male;149;61;3
+************************************************
+Q3. sort -t";" -k10 table
+
+output:
+
+2;Max;Chicago;Illinois;45;Jan;Male;189;87;2
+4;Penelope;Phoenix;Arizona;48;Sep;Female;195;104;3
+5;Henry;Fort_Worth;Texas;35;Apr;Male;149;61;3
+6;William;San_Francisco;California;37;Apr;Male;189;104;3
+9;Jason;Oakland;California;40;Feb;Male;174;90;3
+10;Megan;Cincinnati;Ohio;24;Nov;Female;169;103;4
+1;John;Los_Angeles;California;29;Aug;Male;174;96;4
+3;Samantha;Houston;Texas;25;Jul;Female;185;110;4
+7;Scott;Las_Vegas;Nevada;39;May;Male;147;92;5
+8;James;Miami;Florida;26;Oct;Male;154;111;5
+************************************************
+Q4. sort -t";" -k4 -k3 table
+
+output:
+
+4;Penelope;Phoenix;Arizona;48;Sep;Female;195;104;3
+1;John;Los_Angeles;California;29;Aug;Male;174;96;4
+6;William;San_Francisco;California;37;Apr;Male;189;104;3
+9;Jason;Oakland;California;40;Feb;Male;174;90;3
+8;James;Miami;Florida;26;Oct;Male;154;111;5
+2;Max;Chicago;Illinois;45;Jan;Male;189;87;2
+7;Scott;Las_Vegas;Nevada;39;May;Male;147;92;5
+10;Megan;Cincinnati;Ohio;24;Nov;Female;169;103;4
+3;Samantha;Houston;Texas;25;Jul;Female;185;110;4
+5;Henry;Fort_Worth;Texas;35;Apr;Male;149;61;3
+************************************************
+Q5. cut -d";" -f1,2,5,7,10 table
+
+output:
+
+1;John;29;Male;4
+2;Max;45;Male;2
+3;Samantha;25;Female;4
+4;Penelope;48;Female;3
+5;Henry;35;Male;3
+6;William;37;Male;3
+7;Scott;39;Male;5
+8;James;26;Male;5
+9;Jason;40;Male;3
+10;Megan;24;Female;4
+************************************************
+Q6. cut -d ";" -f2 table | tr 'a-z' 'A-Z'
+
+output:
+JOHN
+MAX
+SAMANTHA
+PENELOPE
+HENRY
+WILLIAM
+SCOTT
+JAMES
+JASON
+MEGAN
+
+************************************************
+Q7. sort -t";" -k5 table
+
+output:
+10;Megan;Cincinnati;Ohio;24;Nov;Female;169;103;4
+3;Samantha;Houston;Texas;25;Jul;Female;185;110;4
+8;James;Miami;Florida;26;Oct;Male;154;111;5
+1;John;Los_Angeles;California;29;Aug;Male;174;96;4
+5;Henry;Fort_Worth;Texas;35;Apr;Male;149;61;3
+6;William;San_Francisco;California;37;Apr;Male;189;104;3
+7;Scott;Las_Vegas;Nevada;39;May;Male;147;92;5
+9;Jason;Oakland;California;40;Feb;Male;174;90;3
+2;Max;Chicago;Illinois;45;Jan;Male;189;87;2
+4;Penelope;Phoenix;Arizona;48;Sep;Female;195;104;3
+
+************************************************
+Q8. sort -t";" -M -k6 table > Personnel_data_month2022.dat
+
+output: cat Personnel_data_month2022.dat
+
+2;Max;Chicago;Illinois;45;Jan;Male;189;87;2
+9;Jason;Oakland;California;40;Feb;Male;174;90;3
+5;Henry;Fort_Worth;Texas;35;Apr;Male;149;61;3
+6;William;San_Francisco;California;37;Apr;Male;189;104;3
+7;Scott;Las_Vegas;Nevada;39;May;Male;147;92;5
+3;Samantha;Houston;Texas;25;Jul;Female;185;110;4
+1;John;Los_Angeles;California;29;Aug;Male;174;96;4
+4;Penelope;Phoenix;Arizona;48;Sep;Female;195;104;3
+8;James;Miami;Florida;26;Oct;Male;154;111;5
+10;Megan;Cincinnati;Ohio;24;Nov;Female;169;103;4
+
+
+************************************************
+Q9. cut -d ";" -f2 table | grep -e S -e J > SJ_Names.dat
+
+output: cat SJ_Names.dat
+John
+Samantha
+Scott
+James
+Jason
+
+
+************************************************
+Q10. cut -d ";" -f2,3,4,5 table | sort -t ";" -k1 > Name.dat
+
+output:  cat Name.dat
+Henry;Fort_Worth;Texas;35
+James;Miami;Florida;26
+Jason;Oakland;California;40
+John;Los_Angeles;California;29
+Max;Chicago;Illinois;45
+Megan;Cincinnati;Ohio;24
+Penelope;Phoenix;Arizona;48
+Samantha;Houston;Texas;25
+Scott;Las_Vegas;Nevada;39
+William;San_Francisco;California;37
+
+
+************************************************
